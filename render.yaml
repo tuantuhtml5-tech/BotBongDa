@@ -1,0 +1,35 @@
+# Requires a paid always-on service + persistent disk. Review pricing before creating.
+services:
+  - type: web
+    name: bot-bong-da
+    runtime: docker
+    plan: starter
+    healthCheckPath: /healthz
+    numInstances: 1
+    disk:
+      name: bot-data
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_USER_ID
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: BOT_BASE_URL
+        sync: false
+      - key: JOBS_SECRET
+        generateValue: true
+      - key: WEBHOOK_SECRET
+        generateValue: true
+      - key: OPENAI_MODEL
+        value: gpt-6-astra
+      - key: DB_PATH
+        value: /data/bot.sqlite3
+      - key: MAX_API_CALLS_PER_DAY
+        value: '30'
+      - key: NOTIFY_REPORTS
+        value: 'false'
